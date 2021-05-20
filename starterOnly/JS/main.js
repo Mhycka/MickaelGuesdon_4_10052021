@@ -8,11 +8,11 @@ function validate () {
     var champ_birthdate = document.getElementById(".birthdate");
     var champ_checkbox = document.getElementById("#checkbox-input");
 
-    var mailRGEX=  /^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]­{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$/;
-    var nameRGEX = /[a-zA-Z]+[ -]+/g;
+    var mailRGEX=  /[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/g;
+    var nameRGEX = /[a-zA-Z -][^0-9]/g;
     var birthdateRGEX = /(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d/g;
     var numbtournamentRGEX = /-?[0-9]+/g;
-    var checkboxRGEX = /true|false|0|1/g;
+    var checkboxRGEX = /true|false|0|1/gm;
 
     var nameResult = nameRGEX.test(champ_prenom,champ_nom);
     var mailResult = mailRGEX.test(champ_email);
@@ -23,35 +23,42 @@ function validate () {
     if (nameResult ==false)
     {
         alert('Please enter a valid text');
-        return false;
+        return data-error;
     }
-
+    
     if (mailResult ==false)
     {
         alert('Please enter a valid email address');
-        return false;
+        return data-error;
     }
 
     if (birthdateResult ==false)
     {
         alert('Please enter a valid birthdate');
-        return false;
+        return data-error;
     }
     
     if (numbtournamentResult ==false)
     {
         alert('Please select one');
-        return false;
+        return data-error;
     }
 
     if (checkboxResult ==false)
     {
-        alert('Please accept condition user');
-        return false;
+        alert('Please accept conditions user');
+        return data-error;
     }
-    
-    else (nameResult ==true)
-    {
-        return true;
-    }
+
 }
+
+var BtnSubmit = document.querySelector('btn-submit')
+
+function pageThanks (){
+    var thanks = document.querySelector('.content');
+    thanks.innerHTML = <p>Merci ! Votre réservation a été reçue.</p>
+
+
+
+}
+    

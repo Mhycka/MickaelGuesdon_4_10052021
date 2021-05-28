@@ -10,10 +10,10 @@
     const quantity = document.getElementById('quantity');
     const champ_birthdate = document.getElementById('birthdate');
     const champ_cities = document.getElementById('cities');
-    const cities = document.querySelectorAll('#cities .checkbox-input');
+    const cityPlace = document.querySelectorAll('#cities .checkbox-input');
     const checkbox1 = document.getElementById('checkbox1');
     const input = document.getElementsByClassName('text-control');
-    const form = document.getElementById('form');
+    const form = document.querySelector('form');
 
 
 // Validation des champs
@@ -34,7 +34,7 @@ function checkFirstName () {
 function checkLastName (){
     if ( champ_nom.value.trim().length < 2 || last.value.trim() ==='' || !champ_nom.value.match(nameRGEX)) {
         champ_nom.parentElement.setAttribute('data-error-visible','true');
-        lastName.style.border = '2px solid #e54858';
+        champ_nom.style.border = '2px solid #e54858';
         return false;
     }
     last.parentElement.setAttribute('data-error-visible', 'false');
@@ -57,11 +57,16 @@ function checkMail() {
 
 //Birthdate
 function checkBirthdate() {
-    const birthdateRGEX = /(19|20)\d\d[-\/](0[1-9]|1[012])[-\/](0[1-9]|[12][0-9]|3[01])/g;
-    if (champ_birthdate.value.trim().match(birthdateRGEX)) {
+    console.log(champ_birthdate.value)
+     const birthdateRGEX = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/gm;
+
+    // console.log(champ_birthdate.value)
+    if (!champ_birthdate.value.trim().match(birthdateRGEX)) {
         champ_birthdate.parentElement.setAttribute('data-error-visible', 'true');
         champ_birthdate.style.border = '2px solid #e54858';
+        console.log('false')
         return false;
+        
     }
     champ_birthdate.parentElement.setAttribute('data-error-visible', 'false');
     champ_birthdate.style.border = 'solid #279e7a 0.19rem';
@@ -76,21 +81,22 @@ function checkNumbTournaments() {
         return false;
     }
     quantity.parentElement.setAttribute('data-error-visible', 'false');
-    quantity.style.border = 'solid #279e7a 0.19rem';
+    quantity.style.border = ' 1px solid #279e7a';
     return true;
 }
 
 // Villes
 function checkCities(){
-    cities.setAttribute('data-error-visible', 'true');
-    for (let i = 0; i < locations.length; i++) {
-        if (locations[i].checked) {
-            allLocations.setAttribute('data-error-visible', 'false');
+    for (let i = 0; i < cityPlace.length; i++) {
+        if (cityPlace[i].checked || cityPlace[i] > 1) {
+            champ_cities.setAttribute('data-error-visible', 'false');
             return true;
         }
     }
+    champ_cities.setAttribute('data-error-visible', 'true');
     return false;
 }
+
 
 // Conditions d'utilisation
 function checkTerm() {
@@ -103,21 +109,72 @@ function checkTerm() {
 }
 
 // Evenement formulaire
-function formFieldsValidation(element, method, event) {
+function validationStepbyStep(element, method, event) {
     element.addEventListener(event, method);
 }
-formFieldsValidation(champ_prenom, checkFirstName, 'focusout');
-formFieldsValidation(champ_nom, checkLastName, 'focusout');
-formFieldsValidation(champ_email, checkEmail, 'focusout');
-formFieldsValidation(champ_birthdate, checkBirthdate, 'focusout');
-formFieldsValidation(quantity, checkTournamentsQuantity, 'focusout');
-formFieldsValidation(champ_cities, checkLocations, 'change');
-formFieldsValidation(checkbox1, checkCheckBox, 'change');
+validationStepbyStep(champ_prenom, checkFirstName, 'focusout');
+validationStepbyStep(champ_nom, checkLastName, 'focusout');
+validationStepbyStep(champ_email, checkMail, 'focusout');
+validationStepbyStep(champ_birthdate, checkBirthdate, 'focusout');
+validationStepbyStep(quantity, checkNumbTournaments, 'focusout');
+validationStepbyStep(champ_cities, checkCities, 'change');
+validationStepbyStep(checkbox1, checkTerm, 'change');
+
+function allValidationcheck() {
+    checkFirstName()
+    checkLastName()
+    checkMail()
+    checkBirthdate()
+    checkNumbTournaments()
+    checkCities()
+    checkTerm()
+}
+
+function validationFormulaire(){
+    if (checkFirstName()=== true && 
+        checkLastName() === true && 
+        checkMail() === true && 
+        checkBirthdate()=== true &&
+        checkNumbTournaments()=== true &&
+        checkCities()=== true &&
+        checkTerm() === true ) {
+            return true;
+        }
+        return false;
+}
+
+// Envoi Formulaire
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if(validationFormulaire()== true) {
+        launchPageThanks();
+        document.querySelector('form').reset();
+     }
+    else{
+        allValidationcheck();
+     }
+});
 
 
 
+// Thanks PAGE
+function launchPageThanks() {
+    document.querySelector('form').hidden = true;
+    let elm = document.querySelector('.modal-body');
+    elm.innerHTML += "<div id='thanks'><h1>TEST</h1><div>"
+}
 
-    console.log(champ_prenom);
-    console.log(champ_nom);
-    console.log(champ_email);
-    console.log(champ_birthdate);
+/*
+// CLOSE 
+function closepageThanks() {
+    pageThanks.style.display = 'none';
+    first.style.border = 'none';
+    last.style.border = 'none';
+    email.style.border = 'none';
+    birthdate.style.border = 'none';
+    quantity.style.border = 'none';
+}
+*/
+// EVENT 
+closeThanks.addEventListener ("click", closepageThanks);
+closeBtnValid.addEventListener("click", closepageThanks);

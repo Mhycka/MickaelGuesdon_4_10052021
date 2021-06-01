@@ -513,17 +513,10 @@ footer {
 }
 
 /*----------------RESPONSIVE---------------*/
-
-@media screen and (max-width: 540px) {
-  .topnav a {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
-  }
-} 
-
 @media screen and (max-width: 768px) {
+  .topnav {
+    margin: 3.5% 3.5% 0 3.5%;
+  }
   .topnav a {
     display: none;
   }
@@ -531,6 +524,9 @@ footer {
   .topnav a.icon {
     float: right;
     display: block;
+    color: red;
+    margin-top: -10px;
+
   }
 
   .topnav.responsive {
@@ -548,43 +544,67 @@ footer {
     display: block;
     text-align: left;
   }
+
+  .topnav .header-logo img {
+    width: 60%;
+  }
 }
 
 @media screen and (max-width: 800px) {
+  main {
+    margin: 0 10px 0 10px;
+  }
+
+  .header-logo img {
+    width: 150px;
+  }
+
   .hero-section {
     display: block;
     box-shadow: unset;
+    min-height: fit-content;
   }
+
   .hero-content {
     background: #fff;
     color: #000;
-    padding: 20px;
+    padding: 0;
+    min-width: fit-content;
   }
+
   .hero-content::after {
     content: unset;
   }
+
   .hero-content .btn-signup {
     display: none;
   }
+
   .hero-headline {
-    font-size: 4.5rem;
-    white-space: normal;
+    font-size: 1.6em;
+    font-weight: 900;
   }
+
   .hero-text {
-    width: unset;
-    font-size: 1.5rem;
+    width: auto;
+    font-size: 0.57em;
+    margin-top: 20px;
   }
+
   .hero-img img {
     border-radius: 10px;
-    margin-top: 40px;
+    margin-top: 20px;
   }
+
   .hero-section > .btn-signup {
     display: block;
-    margin: 32px auto 10px;
+    margin: 20px auto 10px;
     padding: 12px 35px;
+    font-size: 0.6em;
   }
+
   .copyrights {
-    margin-top: 50px;
+    margin-top: 0px;
     text-align: center;
   }
 }

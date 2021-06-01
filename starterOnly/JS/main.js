@@ -31,6 +31,7 @@ function checkFirstName () {
     return true;
 }
 
+
 function checkLastName (){
     if ( champ_nom.value.trim().length < 2 || last.value.trim() ==='' || !champ_nom.value.match(nameRGEX)) {
         champ_nom.parentElement.setAttribute('data-error-visible','true');
@@ -41,6 +42,7 @@ function checkLastName (){
     last.style.border = 'solid #279e7a 0.19rem';
     return true;
 }
+
 
 // Email
 function checkMail() {
@@ -57,14 +59,11 @@ function checkMail() {
 
 //Birthdate
 function checkBirthdate() {
-    console.log(champ_birthdate.value)
      const birthdateRGEX = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/gm;
 
-    // console.log(champ_birthdate.value)
     if (!champ_birthdate.value.trim().match(birthdateRGEX)) {
         champ_birthdate.parentElement.setAttribute('data-error-visible', 'true');
         champ_birthdate.style.border = '2px solid #e54858';
-        console.log('false')
         return false;
         
     }
@@ -112,6 +111,7 @@ function checkTerm() {
 function validationStepbyStep(element, method, event) {
     element.addEventListener(event, method);
 }
+
 validationStepbyStep(champ_prenom, checkFirstName, 'focusout');
 validationStepbyStep(champ_nom, checkLastName, 'focusout');
 validationStepbyStep(champ_email, checkMail, 'focusout');
@@ -138,8 +138,9 @@ function validationFormulaire(){
         checkNumbTournaments()=== true &&
         checkCities()=== true &&
         checkTerm() === true ) {
-            return true;
+        return true;
         }
+
         return false;
 }
 
@@ -149,10 +150,10 @@ form.addEventListener('submit', function(e) {
     if(validationFormulaire()== true) {
         launchPageThanks();
         document.querySelector('form').reset();
-     }
+    }
     else{
         allValidationcheck();
-     }
+    }
 });
 
 
@@ -161,20 +162,26 @@ form.addEventListener('submit', function(e) {
 function launchPageThanks() {
     document.querySelector('form').hidden = true;
     let elm = document.querySelector('.modal-body');
-    elm.innerHTML += "<div id='thanks'><h1>TEST</h1><div>"
+    elm.innerHTML += "<div id='thanks'><h1>Merci ! <br> Votre réservation a été reçue.</h1><input id='closeThanks' type='button' value='Fermer'/></div>";
+
+    // Close et Reset 
+const closeBtn = document.getElementById('closeThanks');
+closeBtn.addEventListener ('click', closeThanksPage);
+
+const closeModal2 = document.querySelector(".close2");
+
+closeModal2.addEventListener('click', closeup2)
+
+    function closeup2() {
+        modalbg.style.display = "none";
+    document.querySelector('form').hidden = false;
+    document.getElementById('thanks').hidden = true;
+    }
 }
 
-/*
-// CLOSE 
-function closepageThanks() {
-    pageThanks.style.display = 'none';
-    first.style.border = 'none';
-    last.style.border = 'none';
-    email.style.border = 'none';
-    birthdate.style.border = 'none';
-    quantity.style.border = 'none';
+function closeThanksPage() {
+    modalbg.style.display = "none";
+    document.querySelector('form').hidden = false;
+    document.getElementById('thanks').hidden = true;
 }
-*/
-// EVENT 
-closeThanks.addEventListener ("click", closepageThanks);
-closeBtnValid.addEventListener("click", closepageThanks);
+

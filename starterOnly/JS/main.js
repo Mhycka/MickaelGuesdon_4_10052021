@@ -149,7 +149,6 @@ form.addEventListener('submit', function(e) {
     e.preventDefault();
     if(validationFormulaire()== true) {
         launchPageThanks();
-        document.querySelector('form').reset();
     }
     else{
         allValidationcheck();
@@ -164,24 +163,16 @@ function launchPageThanks() {
     let elm = document.querySelector('.modal-body');
     elm.innerHTML += "<div id='thanks'><h1>Merci ! <br> Votre réservation a été reçue.</h1><input id='closeThanks' type='button' value='Fermer'/></div>";
 
-    // Close et Reset 
-const closeBtn = document.getElementById('closeThanks');
-closeBtn.addEventListener ('click', closeThanksPage);
+    // Close 
+    const closeBtn = document.getElementById('closeThanks');
+    closeBtn.addEventListener ('click', closeThanksPage);
 
-const closeModal2 = document.querySelector(".close2");
-
-closeModal2.addEventListener('click', closeup2)
-
-    function closeup2() {
-        modalbg.style.display = "none";
-    document.querySelector('form').hidden = false;
-    document.getElementById('thanks').hidden = true;
-    }
+    const closeModal2 = document.querySelector(".close2");
+    closeModal2.addEventListener('click', closeThanksPage);
 }
 
+// Reset
 function closeThanksPage() {
-    modalbg.style.display = "none";
-    document.querySelector('form').hidden = false;
-    document.getElementById('thanks').hidden = true;
+    location.reload();
 }
 
